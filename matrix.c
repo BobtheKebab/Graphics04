@@ -13,7 +13,12 @@ Returns: The translation matrix created using x, y and z
 as the translation offsets.
 ====================*/
 struct matrix * make_translate(double x, double y, double z) {
-  return NULL;
+  struct matrix mat = new_matrix(4,4);
+  ident(mat);
+  mat->m[0][3] = x;
+  mat->m[1][3] = y;
+  mat->m[2][3] = z;
+  return mat;
 }
 
 /*======== struct matrix * make_scale() ==========
@@ -24,7 +29,12 @@ Returns: The translation matrix creates using x, y and z
 as the scale factors
 ====================*/
 struct matrix * make_scale(double x, double y, double z) {
-  return NULL;
+  struct matrix mat = new_matrix(4,4);
+  ident(mat);
+  mat->m[0][0] = x;
+  mat->m[1][1] = y;
+  mat->m[2][2] = z;
+  return mat;
 }
 
 /*======== struct matrix * make_rotX() ==========
@@ -34,7 +44,13 @@ Returns: The rotation matrix created using theta as the
 angle of rotation and X as the axis of rotation.
 ====================*/
 struct matrix * make_rotX(double theta) {
-  return NULL;
+  struct matrix mat = new_matrix(4,4);
+  ident(mat);
+  mat->m[1][1] = cos(theta);
+  mat->m[1][2] = -1 * sin(theta);
+  mat->m[2][1] = sin(theta);
+  mat->m[2][2] = cos(theta);
+  return mat;
 }
 
 /*======== struct matrix * make_rotY() ==========
@@ -44,7 +60,13 @@ Returns: The rotation matrix created using theta as the
 angle of rotation and Y as the axis of rotation.
 ====================*/
 struct matrix * make_rotY(double theta) {
-  return NULL;
+  struct matrix mat = new_matrix(4,4);
+  ident(mat);
+  mat->m[0][0] = sin(theta);
+  mat->m[0][2] = cos(theta);
+  mat->m[2][0] = -1 * sin(theta);
+  mat->m[2][2] = cos(theta)
+  return mat;
 }
 
 /*======== struct matrix * make_rotZ() ==========
@@ -54,7 +76,13 @@ Returns: The rotation matrix created using theta as the
 angle of rotation and Z as the axis of rotation.
 ====================*/
 struct matrix * make_rotZ(double theta) {
-  return NULL;
+  struct matrix mat = new_matrix(4,4);
+  ident(mat);
+  mat->m[0][0] = cos(theta);
+  mat->m[0][1] = -1 * sin(theta);
+  mat->m[1][0] = sin(theta);
+  mat->m[1][1] = cos(theta);
+  return mat;
 }
 
 
