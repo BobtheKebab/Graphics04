@@ -72,6 +72,8 @@ void parse_file ( char * filename,
     printf(":%s:\n",line);
 
     if (!strcmp(line, "line")) {
+      fgets(line, 255, f);
+      line[strlen(line)-1]='\0';
       sscanf("%d %d %d %d %d %d", args[0], args[1], args[2], args[3], args[4], args[5]);
       add_edge(edges, args[0], args[1], args[2], args[3], args[4], args[5]);
     }
@@ -79,31 +81,37 @@ void parse_file ( char * filename,
       ident(transform);
     }
     else if (!strcmp(line, "scale")) {
+      fgets(line, 255, f);
+      line[strlen(line)-1]='\0';
       sscanf("%d %d %d", args[0], args[1], args[2]);
       struct matrix * m = make_scale(args[0], args[1], args[2]);
       matrix_mult(m, transform);
       free_matrix(m);
     }
     else if (!strcmp(line, "move")) {
+      fgets(line, 255, f);
+      line[strlen(line)-1]='\0';
       sscanf("%d %d %d", args[0], args[1], args[2]);
       struct matrix * m = make_translate(args[0], args[1], args[2]);
       matrix_mult(m, transform);
       free_matrix(m);
     }
     else if (!strcmp(line, "rotate")) {
+      fgets(line, 255, f);
+      line[strlen(line)-1]='\0';
       char axis;
       float angle;
       sscanf("%c %f", axis, angle);
       angle = angle * M_PI / 180;
       
       struct matrix * m;
-      if (axis == 'X') {
+      if (axis == 'x') {
 	m = make_rotX(angle);
       }
-      else if (axis == 'Y') {
+      else if (axis == 'y') {
 	m = make_rotY(angle);
       }
-      else if (axis == 'Z') {
+      else if (axis == 'z') {
 	m = make_rotZ(angle);
       }
       
@@ -119,6 +127,8 @@ void parse_file ( char * filename,
       display(s);
     }
     else if (!strcmp(line, "save")) {
+      fgets(line, 255, f);
+      line[strlen(line)-1]='\0';
       char fname;
       sscanf("%c", fname);
       clear_screen(s);
