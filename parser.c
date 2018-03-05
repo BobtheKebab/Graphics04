@@ -59,7 +59,6 @@ void parse_file ( char * filename,
 
   FILE *f;
   char line[256];
-  char ** args = (char **) malloc(6 * sizeof(char *));
   color c;
   c.red = MAX_COLOR;
   clear_screen(s);
@@ -106,7 +105,7 @@ void parse_file ( char * filename,
       line[strlen(line)-1]='\0';
       char axis;
       double angle;
-      sscanf(line, "%c %d", &axis, &angle);
+      sscanf(line, "%c %lf", &axis, &angle);
       angle = angle * M_PI / 180.0;
       
       struct matrix * m;

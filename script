@@ -22,6 +22,22 @@ line
 100 100 0 100 100 100
 line
 100 0 0 100 0 100
+line
+30 25 0 70 25 0
+line
+30 75 0 70 75 0
+line
+30 75 0 30 25 0
+line
+30 50 0 60 50 0
+line
+70 75 0 70 60 0
+line
+60 50 0 70 60 0
+line
+60 50 0 70 40 0
+line
+70 40 0 70 25 0
 display
 ident
 scale
@@ -49,3 +65,4 @@ apply
 display
 save
 pic.png
+
