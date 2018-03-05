@@ -59,7 +59,9 @@ void parse_file ( char * filename,
 
   FILE *f;
   char line[256];
-  int args[6]
+  char ** args = (char **) malloc(6 * sizeof(char *));
+  color c;
+  c.red = MAX_COLOR;
   clear_screen(s);
 
   if ( strcmp(filename, "stdin") == 0 ) 
@@ -74,8 +76,9 @@ void parse_file ( char * filename,
     if (!strcmp(line, "line")) {
       fgets(line, 255, f);
       line[strlen(line)-1]='\0';
-      sscanf("%d %d %d %d %d %d", args[0], args[1], args[2], args[3], args[4], args[5]);
-      add_edge(edges, args[0], args[1], args[2], args[3], args[4], args[5]);
+      double x1, y1, z1, x2, y2, z2;
+      sscanf(line, "%lf %lf %lf %lf %lf %lf", &x1, &y1, &z1, &x2, &y2, &z2);
+      add_edge(edges, x1, y1, z1, x2, y2, z2);
     }
     else if (!strcmp(line, "ident")) {
       ident(transform);
@@ -83,16 +86,18 @@ void parse_file ( char * filename,
     else if (!strcmp(line, "scale")) {
       fgets(line, 255, f);
       line[strlen(line)-1]='\0';
-      sscanf("%d %d %d", args[0], args[1], args[2]);
-      struct matrix * m = make_scale(args[0], args[1], args[2]);
+      double x1, y1, z1;
+      sscanf(line, "%lf %lf %lf", &x1, &y1, &z1);
+      struct matrix * m = make_scale(x1, y1, z1);
       matrix_mult(m, transform);
       free_matrix(m);
     }
     else if (!strcmp(line, "move")) {
       fgets(line, 255, f);
       line[strlen(line)-1]='\0';
-      sscanf("%d %d %d", args[0], args[1], args[2]);
-      struct matrix * m = make_translate(args[0], args[1], args[2]);
+      double x1, y1, z1;
+      sscanf(line, "%lf %lf %lf", &x1, &y1, &z1);
+      struct matrix * m = make_translate(x1, y1, z1);
       matrix_mult(m, transform);
       free_matrix(m);
     }
@@ -100,9 +105,9 @@ void parse_file ( char * filename,
       fgets(line, 255, f);
       line[strlen(line)-1]='\0';
       char axis;
-      float angle;
-      sscanf("%c %f", axis, angle);
-      angle = angle * M_PI / 180;
+      double angle;
+      sscanf(line, "%c %d", &axis, &angle);
+      angle = angle * M_PI / 180.0;
       
       struct matrix * m;
       if (axis == 'x') {
@@ -129,11 +134,9 @@ void parse_file ( char * filename,
     else if (!strcmp(line, "save")) {
       fgets(line, 255, f);
       line[strlen(line)-1]='\0';
-      char fname;
-      sscanf("%c", fname);
       clear_screen(s);
       draw_lines(edges, s, c);
-      save_extension(s, fname);
+      save_extension(s, line);
     }
   }
 }
